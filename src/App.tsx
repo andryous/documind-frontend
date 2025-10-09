@@ -1,11 +1,16 @@
-// src/App.tsx
+// Page shell: header + main + footer (pure layout)
+import Header from "@/components/layout/Header";
+import InvoiceUpload from "@/components/dashboard/InvoiceUploader";
+import Footer from "@/components/layout/Footer";
 
-function App() {
+export default function App() {
   return (
-    <main className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold">¡Bienvenido a DocuMind!</h1>
-    </main>
+    <div className="min-h-svh bg-background text-foreground">
+      <Header />
+      <main className="mx-auto max-w-5xl px-6 py-10 md:py-14">
+        <InvoiceUpload />
+      </main>
+      <Footer />
+    </div>
   );
 }
-
-export default App;
