@@ -1,5 +1,5 @@
 // Simple footer note (no links yet)
-export default function Footer() {
+export function Footer() {
   return (
     <footer className="border-t py-8">
       <p className="text-center text-xs text-muted-foreground">

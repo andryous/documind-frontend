@@ -1,7 +1,7 @@
 // Minimal brand header. Theme toggle can be added later.
 import { Brain } from "lucide-react";
 
-export default function Header() {
+export function Header() {
   return (
     <header className="border-b bg-background/80 backdrop-blur">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">

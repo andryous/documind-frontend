@@ -1,16 +1,20 @@
-// Page shell: header + main + footer (pure layout)
-import Header from "@/components/layout/Header";
-import InvoiceUpload from "@/components/dashboard/InvoiceUploader";
-import Footer from "@/components/layout/Footer";
+// src/App.tsx
 
-export default function App() {
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { InvoiceProcessor } from "@/components/dashboard/InvoiceProcessor"; // Step 1: Import the new manager component
+
+function App() {
   return (
-    <div className="min-h-svh bg-background text-foreground">
+    <>
       <Header />
-      <main className="mx-auto max-w-5xl px-6 py-10 md:py-14">
-        <InvoiceUpload />
+      <main className="container mx-auto p-4 flex-grow flex flex-col items-center justify-center">
+        {/* Step 2: Delegate the entire feature to its manager component. Clean and simple. */}
+        <InvoiceProcessor />
       </main>
       <Footer />
-    </div>
+    </>
   );
 }
+
+export default App;

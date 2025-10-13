@@ -3,7 +3,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CloudUpload } from "lucide-react";
 
-export default function InvoiceUpload() {
+export function InvoiceUpload() {
   return (
     <section>
       {/* Hero */}
