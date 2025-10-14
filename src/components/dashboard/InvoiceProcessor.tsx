@@ -22,7 +22,7 @@ export function InvoiceProcessor() {
         {processingState === "error" && <ErrorState />} {/* Step 2: Render */}
       </div>
 
-      <div className="border p-4 mt-8 space-x-3">
+      <div className="border p-4 mt-8 space-x-2">
         <span>Dev Controls:</span>
         <Button variant="outline" onClick={() => setProcessingState("idle")}>
           Idle

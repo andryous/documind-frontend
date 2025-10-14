@@ -1,9 +1,32 @@
 // Hero + upload card (visual only, no logic yet)
+import { useRef } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CloudUpload } from "lucide-react";
 
+/**
+ * A component that allows users to select a file for processing.
+ * It handles the click event to trigger a hidden file input.
+ */
 export function InvoiceUpload() {
+  // Step 2: It creates a ref. This will act as the 'remote control' for the file input.
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Step 3: This function will be called when the user clicks the visible button.
+  const handleButtonClick = () => {
+    // It uses the ref to access the invisible input and trigger its click event.
+    fileInputRef.current?.click();
+  };
+
+  // Step 4: This function will be called when a file is actually selected.
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      console.log("File selected:", file.name);
+      // In the next step, we will use this file to call our API.
+    }
+  };
+
   return (
     <section>
       {/* Hero */}
@@ -22,9 +45,11 @@ export function InvoiceUpload() {
         <CardContent>
           <div className="rounded-xl border-2 border-dashed border-muted-foreground/40 p-10 text-center">
             <CloudUpload className="mx-auto mb-4 size-10 opacity-70" />
-            {/* Primary button (blue accent as requested) */}
+
+            {/* The primary button now triggers the file selection. */}
             <Button
               type="button"
+              onClick={handleButtonClick} // This is the connection to the logic.
               className="mx-auto block bg-blue-600 text-white hover:bg-blue-500"
             >
               Select File
@@ -32,6 +57,15 @@ export function InvoiceUpload() {
             <p className="mt-4 text-xs text-muted-foreground">
               Supported formats: PDF, JPG, PNG.
             </p>
+
+            {/* The hidden file input that does the actual work. */}
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              className="hidden"
+              accept=".pdf,.jpg,.jpeg,.png "
+            />
           </div>
         </CardContent>
       </Card>
