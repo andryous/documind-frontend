@@ -17,32 +17,31 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 
-// This TypeScript interface defines the shape of the data the component expects.
-// This is a contract that ensures data consistency.
-interface ExtractedData {
+// This TypeScript interface defines the shape of the data that the component expects.
+// It acts as a contract to ensure data consistency.
+export interface ExtractedData {
   field: string;
-  value: string | number;
+  // The value can be a string, a number, or null if not found.
+  value: string | number | null;
   status: "extracted" | "missing";
 }
 
-// We define our mock data here. In the future, this will come from the API.
-const mockInvoiceData: ExtractedData[] = [
-  { field: "Vendor Name", value: "ACME Inc.", status: "extracted" },
-  { field: "Invoice Date", value: "2025-10-13", status: "extracted" },
-  { field: "Total Amount", value: 150.75, status: "extracted" },
-  { field: "Currency", value: "USD", status: "extracted" },
-  { field: "Invoice Number", value: "INV-2025-101", status: "extracted" },
-  { field: "Payment Due Date", value: "N/A", status: "missing" },
-];
+// This interface defines the props for the SuccessState component itself.
+// It can accept a single object, an array of objects, or null.
+interface SuccessStateProps {
+  data: ExtractedData | ExtractedData[] | null;
+}
 
 /**
  * Renders the extracted invoice data in a structured table.
  * It receives the processed data as props and displays it.
  */
-export function SuccessState() {
-  // In a real scenario, this component would receive the data via props,
-  // for example: export function SuccessState({ data }: { data: ExtractedData[] })
-  const data = mockInvoiceData;
+export function SuccessState({ data }: SuccessStateProps) {
+  // This logic ensures 'items' is always an array.
+  // - If 'data' exists, it checks if it's already an array.
+  // - If it's not an array (i.e., a single object), it wraps it in a new array.
+  // - If 'data' is null or undefined, it defaults to an empty array to prevent crashes.
+  const items = data ? (Array.isArray(data) ? data : [data]) : [];
 
   return (
     <Card className="w-full max-w-3xl">
@@ -62,8 +61,8 @@ export function SuccessState() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {/* We use the .map() method to dynamically generate a row for each item in our data array. */}
-            {data.map((item) => (
+            {/* The .map() method can now be safely called, as 'items' is guaranteed to be an array. */}
+            {items.map((item) => (
               <TableRow key={item.field}>
                 <TableCell className="font-medium">{item.field}</TableCell>
                 <TableCell>{item.value}</TableCell>

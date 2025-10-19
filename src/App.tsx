@@ -2,14 +2,24 @@
 
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { InvoiceProcessor } from "@/components/dashboard/InvoiceProcessor"; // Step 1: Import the new manager component
+import { InvoiceProcessor } from "@/components/dashboard/InvoiceProcessor";
 
 function App() {
   return (
     <>
       <Header />
       <main className="container mx-auto p-4 flex-grow flex flex-col items-center justify-center">
-        {/* Step 2: Delegate the entire feature to its manager component. Clean and simple. */}
+        {/* The hero section titles are now back in their correct place */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl md:text-5xl font-bold">
+            Extract data from your invoices instantly
+          </h1>
+          <p className="text-muted-foreground mt-2">
+            Upload an invoice — drag and drop a file or click the button below
+          </p>
+        </div>
+
+        {/* The InvoiceProcessor now only manages the state cards, not the title */}
         <InvoiceProcessor />
       </main>
       <Footer />
