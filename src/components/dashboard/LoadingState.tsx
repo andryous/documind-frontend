@@ -10,7 +10,7 @@ import { Hourglass } from "lucide-react"; // An icon that represents waiting
  */
 export function LoadingState() {
   return (
-    <Card className="w-full max-w-3xl">
+    <Card className="w-full max-w-3xl mx-auto">
       <CardHeader className="text-center">
         {/* The title indicates the current process to the user. */}
         <CardTitle className="text-2xl flex items-center justify-center gap-2">

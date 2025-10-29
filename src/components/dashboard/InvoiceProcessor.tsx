@@ -84,6 +84,13 @@ export function InvoiceProcessor() {
     }
   };
 
+  // This new function resets the application state back to the initial 'idle' state.
+  const handleReset = () => {
+    setProcessingState("idle");
+    setExtractedData(null);
+    setErrorMessage("");
+  };
+
   return (
     <div className="w-full">
       {processingState === "idle" && (
@@ -91,8 +98,9 @@ export function InvoiceProcessor() {
       )}
       {processingState === "loading" && <LoadingState />}
       {processingState === "success" && <SuccessState data={extractedData} />}
+      {/* The ErrorState component now receives the handleReset function as a prop. */}
       {processingState === "error" && (
-        <ErrorState errorMessage={errorMessage} />
+        <ErrorState errorMessage={errorMessage} onReset={handleReset} />
       )}
     </div>
   );
