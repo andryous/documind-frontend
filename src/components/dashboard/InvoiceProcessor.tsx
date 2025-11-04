@@ -7,7 +7,7 @@ import { LoadingState } from "@/components/dashboard/LoadingState";
 import { SuccessState } from "@/components/dashboard/SuccessState";
 import { ErrorState } from "@/components/dashboard/ErrorState";
 
-// The type for the raw API response.
+// Defines the shape of the raw JSON response expected from the API.
 type ApiData = {
   vendor: string | null;
   invoice_date: string | null;
@@ -15,6 +15,11 @@ type ApiData = {
   currency: string | null;
   invoice_number: string | null;
 };
+
+// Get the API URL from environment variables.
+// Vite exposes env variables via `import.meta.env`.
+// It defaults to localhost for local development if the VITE_API_URL is not set.
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 export function InvoiceProcessor() {
   const [processingState, setProcessingState] = useState<
@@ -25,24 +30,36 @@ export function InvoiceProcessor() {
   );
   const [errorMessage, setErrorMessage] = useState("");
 
+  /**
+   * Handles the file selection event.
+   * It sends the file to the backend API for processing.
+   * @param file The file selected by the user.
+   */
   const handleFileSelect = async (file: File) => {
     setProcessingState("loading");
     const formData = new FormData();
     formData.append("file", file);
 
     try {
-      const response = await fetch("http://localhost:8000/invoices/extract", {
+      // Use the dynamic API_URL instead of a hardcoded localhost path.
+      const response = await fetch(`${API_URL}/invoices/extract`, {
         method: "POST",
         body: formData,
       });
 
       if (!response.ok) {
-        throw new Error(`Server error: ${response.statusText}`);
+        // Handle HTTP errors (e.g., 500, 415) from the server.
+        const errorData = await response.json();
+        throw new Error(
+          errorData.detail || `Server error: ${response.statusText}`
+        );
       }
 
       const rawData: ApiData = await response.json();
 
-      // --- DATA TRANSFORMATION LOGIC ---
+      // --- Data Transformation Logic ---
+      // This logic converts the flat API object into the array format
+      // that the SuccessState component expects.
       const formattedData: ExtractedData[] = [
         {
           field: "Vendor Name",
@@ -75,6 +92,7 @@ export function InvoiceProcessor() {
       setExtractedData(formattedData);
       setProcessingState("success");
     } catch (error) {
+      // Catch network errors or errors thrown from the block above.
       console.error("Failed to process file:", error);
       setErrorMessage(
         error instanceof Error ? error.message : "An unknown error occurred."
@@ -83,13 +101,17 @@ export function InvoiceProcessor() {
     }
   };
 
-  // This function resets the application state back to the initial 'idle' state.
+  /**
+   * Resets the application state back to the initial 'idle' state.
+   * This is passed to child components (SuccessState, ErrorState).
+   */
   const handleReset = () => {
     setProcessingState("idle");
     setExtractedData(null);
     setErrorMessage("");
   };
 
+  // Conditionally render the correct component based on the current application state.
   return (
     <div className="w-full">
       {processingState === "idle" && (
@@ -97,11 +119,9 @@ export function InvoiceProcessor() {
       )}
       {processingState === "loading" && <LoadingState />}
 
-      {/* The SuccessState component now also receives the handleReset function. */}
       {processingState === "success" && (
         <SuccessState data={extractedData} onReset={handleReset} />
       )}
-      {/* ---------------------- */}
 
       {processingState === "error" && (
         <ErrorState errorMessage={errorMessage} onReset={handleReset} />
