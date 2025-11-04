@@ -97,7 +97,6 @@ export function InvoiceProcessor() {
       )}
       {processingState === "loading" && <LoadingState />}
 
-      {/* --- CHANGE IS HERE --- */}
       {/* The SuccessState component now also receives the handleReset function. */}
       {processingState === "success" && (
         <SuccessState data={extractedData} onReset={handleReset} />
