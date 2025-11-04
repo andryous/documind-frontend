@@ -43,7 +43,6 @@ export function InvoiceProcessor() {
       const rawData: ApiData = await response.json();
 
       // --- DATA TRANSFORMATION LOGIC ---
-      // This logic converts the API object into the array that SuccessState expects.
       const formattedData: ExtractedData[] = [
         {
           field: "Vendor Name",
@@ -84,7 +83,7 @@ export function InvoiceProcessor() {
     }
   };
 
-  // This new function resets the application state back to the initial 'idle' state.
+  // This function resets the application state back to the initial 'idle' state.
   const handleReset = () => {
     setProcessingState("idle");
     setExtractedData(null);
@@ -97,8 +96,14 @@ export function InvoiceProcessor() {
         <InvoiceUpload onFileSelect={handleFileSelect} />
       )}
       {processingState === "loading" && <LoadingState />}
-      {processingState === "success" && <SuccessState data={extractedData} />}
-      {/* The ErrorState component now receives the handleReset function as a prop. */}
+
+      {/* --- CHANGE IS HERE --- */}
+      {/* The SuccessState component now also receives the handleReset function. */}
+      {processingState === "success" && (
+        <SuccessState data={extractedData} onReset={handleReset} />
+      )}
+      {/* ---------------------- */}
+
       {processingState === "error" && (
         <ErrorState errorMessage={errorMessage} onReset={handleReset} />
       )}

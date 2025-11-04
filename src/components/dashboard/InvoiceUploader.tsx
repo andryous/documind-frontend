@@ -78,7 +78,7 @@ export function InvoiceUpload({ onFileSelect }: InvoiceUploadProps) {
             or drag and drop it here
           </p>
           <p className="text-xs text-muted-foreground mt-2">
-            Supported formats: PDF, JPG, PNG.
+            Supported formats: PDF only.
           </p>
           <input
             type="file"

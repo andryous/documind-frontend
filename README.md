@@ -1,73 +1,56 @@
-# React + TypeScript + Vite
+# DocuMind - Frontend UI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![React](https://img.shields.io/badge/React-19.1.1-blue?style=flat-square)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue?style=flat-square)
+![Vite](https://img.shields.io/badge/Vite-7.1.7-purple?style=flat-square)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1.14-cyan?style=flat-square)
 
-Currently, two official plugins are available:
+A modern and responsive UI for submitting invoices to the DocuMind AI API. Built with React, TypeScript, and Vite, and ready for seamless deployment on Vercel.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ► Key Features
 
-## React Compiler
+- **Modern UI/UX:** A minimal, professional, and fully responsive layout built with Tailwind CSS and ShadCN/UI.
+- **Dynamic State Management:** A single-page app (SPA) that handles all application states (`Idle`, `Loading`, `Success`, `Error`) client-side.
+- **Interactive File Upload:** Supports both file selection and "drag-and-drop" for a seamless user experience.
+- **Adaptive Data Display:** Presents extracted JSON data in a table that elegantly transforms into a card layout on mobile devices.
+- **Robust & Focused:** Strictly accepts `application/pdf` file types to ensure reliable processing by the backend.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ► Tech Stack
 
-## Expanding the ESLint configuration
+- **Framework:** React 19
+- **Language:** TypeScript
+- **Build Tool:** Vite
+- **Styling:** Tailwind CSS
+- **Components:** ShadCN/UI
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## ► Local Development
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 1. Prerequisites
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Node.js (v18 or higher)
+- `npm` (or `yarn` / `pnpm`)
+- The [DocuMind Backend API](https://github.com/andryous/documind-backend) must be running on `http://localhost:8000`.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 2. Clone & Install Dependencies
+
+```bash
+# Clone the repository
+git clone [https://github.com/andryous/documind-frontend.git]
+cd documind-frontend
+
+# Install dependencies
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Clone & Install Dependencies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Run the Application
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+The application will start on http://localhost:5173 and will automatically connect to the backend running on http://localhost:8000.
+
+👤 Author
+Claudio Rodriguez

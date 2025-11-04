@@ -4,6 +4,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -16,12 +17,19 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 // This TypeScript interface defines the shape of the data the component expects.
 export interface ExtractedData {
   field: string;
   value: string | number | null;
   status: "extracted" | "missing";
+}
+
+// It now also expects an 'onReset' function.
+interface SuccessStateProps {
+  data: ExtractedData | ExtractedData[] | null;
+  onReset: () => void;
 }
 
 interface SuccessStateProps {
@@ -31,7 +39,7 @@ interface SuccessStateProps {
 /**
  * Renders the extracted invoice data in a structured, responsive table.
  */
-export function SuccessState({ data }: SuccessStateProps) {
+export function SuccessState({ data, onReset }: SuccessStateProps) {
   const items = data ? (Array.isArray(data) ? data : [data]) : [];
 
   return (
@@ -89,6 +97,9 @@ export function SuccessState({ data }: SuccessStateProps) {
           </TableBody>
         </Table>
       </CardContent>
+      <CardFooter className="justify-end">
+        <Button onClick={onReset}>Upload Another File</Button>
+      </CardFooter>
     </Card>
   );
 }
